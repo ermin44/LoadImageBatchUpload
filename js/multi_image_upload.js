@@ -46,6 +46,9 @@ app.registerExtension({
         const w = node.addWidget("text", inputName, "[]", () => {});
         w.serialize = true;
 
+        const minNodeWidth = 360;
+        const minNodeHeight = 240;
+
         // Keep a JS-side list too.
         let filesValue = [];
 
@@ -183,7 +186,7 @@ app.registerExtension({
           // Expand node height a bit based on how many images we show
           const rows = Math.ceil(filesValue.length / 3);
           const extra = rows ? (rows * 78) : 0;
-          node.size[1] = Math.max(node.size[1], 200 + extra);
+          node.size[1] = Math.max(node.size[1], minNodeHeight + extra);
           node.setDirtyCanvas(true, true);
         }
 
@@ -215,6 +218,9 @@ app.registerExtension({
           serialize: false,
           hideOnZoom: false,
         });
+
+        node.size[0] = Math.max(node.size[0], minNodeWidth);
+        node.size[1] = Math.max(node.size[1], minNodeHeight);
 
         // Initial render (in case workflow loads with existing value)
         try {
